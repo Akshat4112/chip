@@ -12,6 +12,7 @@ class LinearRegression():
         self.mu = []
         self.std = []
         self.c = Cost()
+        self.g = GradientDescent()
         pass
     
     def fit(self, X,Y):
@@ -58,7 +59,7 @@ Y = np.array([[10,20,30,40,50,60,70,80,90,100]])
 
 obj = LinearRegression()
 obj.fit(X, Y)
-obj.predict([[8]])
+obj.predict([[80]])
 
             
             

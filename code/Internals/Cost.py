@@ -14,7 +14,10 @@ class Cost:
         
     def LogisticRegressionCost(self):
         return None
-    def LassoRegressionCost(self):
-        return None
-    def RidgeRegressionCost(self):
-        return None
+
+    def LassoRegressionCost(self,x,y, theta):
+        return ((self.Hypothesis(x,theta) - y).T@(self.Hypothesis(x,theta)-y)/(2*y.shape[0]))
+        
+    def RidgeRegressionCost(self,x,y, theta, lambda_):
+        return ((self.Hypothesis(x,theta) - y).T@(self.Hypothesis(x,theta)-y)/(2*y.shape[0])) + lambda_*np.sum(theta*theta)
+        

@@ -14,14 +14,21 @@ class LinearRegression:
         pass
     
     def fit(self, X,Y):
+        
+
 
         self.X = X
         self.Y = Y
+        
+        self.mu.append(np.mean(self.X, axis=1))
+        self.std.append(np.std(self.X, axis=1))
+        print("Mean is: ", self.mu)
+        print("std is: ", self.std)
+        self.X = self.X.T
 
         self.Y = np.reshape(self.Y, (4,1))
         self.X = np.hstack((np.ones((self.X.shape[0],1)), self.X))
-
-
+        
         print("Input X Shape: ", self.X.shape)
         print("Input Y Shape: ", self.Y.shape)
         
@@ -40,27 +47,34 @@ class LinearRegression:
 
             for _ in range(num_epocs):
                 h_x = hypothesis(x, theta)
-                print(x.T.shape)
-                print(h_x.shape)
                 cost_ = (1/m)*(x.T@(h_x - y))
                 theta = theta - (learning_rate)*cost_
                 J_all.append(cost(x, y, theta))
             
             return theta, J_all
         
-        theta, J_all = gradient_descent(self.X, self.Y, theta, learning_rate = 0.01, num_epocs = 500)
+        theta, J_all = gradient_descent(self.X, self.Y, theta, learning_rate = 0.1, num_epocs = 50)
         self.beta = theta
         print("Theta Shape After GD", theta.shape)
+        print(self.beta)
+        
 
-    def predict(self, X,y):
-        return None
+    def predict(self, X):
+
+        self.X = X
+        self.X[0] = (self.X[0] - self.mu[0])/self.std[0]
+        y_pred = self.beta[0] + self.beta[1]*self.X[0] 
+        # print(self.beta)
+        print("Prediction is: ", y_pred)
+        return y_pred
     
         
 X = np.array([[1,2,3,4]])
-Y = np.array([[5,6,7,5]])
+Y = np.array([[10,20,30,40]])
 
 obj = LinearRegression()
 obj.fit(X, Y)
+obj.predict([[3]])
 
             
             

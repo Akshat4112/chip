@@ -1,3 +1,6 @@
+import numpy as np
+
+
 class Cost:
     def __init__(self) -> None:
         pass
